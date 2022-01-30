@@ -11,8 +11,6 @@ function saveText() {
 
     localStorage.setItem(time, value);
 }
-
-
 //Saves Data to HTML
 $("#hour-8 .description").val(localStorage.getItem("hour-8"));
 $("#hour-9 .description").val(localStorage.getItem("hour-9"));
@@ -25,3 +23,31 @@ $("#hour-15 .description").val(localStorage.getItem("hour-15"));
 $("#hour-16 .description").val(localStorage.getItem("hour-16"));
 $("#hour-17 .description").val(localStorage.getItem("hour-17"));
 
+//Highlighting the current time
+function timeKeeper() {
+    var currentTime = moment().hour();
+
+    //Loop
+    $(".time-block").each(function () {
+        var timeBlock = parseInt($(this).attr("id").split("hour-")[1]);
+        
+        //Check time and add class
+        if (timeBlock < currentTime) {
+            $(this).removeClass("future");
+            $(this).removeClass("present");
+            $(this).addClass("past");
+        }
+        else if (timeBlock === currentTime) {
+            $(this).removeClass("future");
+            $(this).removeClass("past");
+            $(this).addClass("present");
+        }
+        else {
+            $(this).removeClass("past");
+            $(this).removeClass("present");
+            $(this).addClass("future");
+        }
+    })
+}
+
+timeKeeper();
